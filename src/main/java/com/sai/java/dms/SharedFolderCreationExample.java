@@ -134,7 +134,7 @@ public class SharedFolderCreationExample {
 			str.append(line2.trim()).append(" ");
 		}
 		System.out.println(str);
-		if (str.indexOf(" "+shareName+" ") > -1) {
+		if (str.indexOf(" " + shareName + " ") > -1) {
 			return true;
 		}
 		return false;
@@ -160,5 +160,27 @@ public class SharedFolderCreationExample {
 		int exitValue = executor.execute(cmdLine);
 		System.out.println("Showing " + exitValue);
 		return true;
+	}
+
+	/**
+	 * Deletes the provided shared folder from the network.
+	 * 
+	 * @param shareName
+	 *            Name of the shared folder.
+	 * @return {@code true} if it deleted successfully else returns {@code false}.
+	 */
+	protected boolean deleteSharedFolder(String shareName) {
+		try {
+			String line = String.format("net share %s /delete", shareName);
+			CommandLine cmdLine = CommandLine.parse(line);
+			DefaultExecutor executor = new DefaultExecutor();
+			// executor.setExitValue(2);
+			int exitValue = executor.execute(cmdLine);
+			System.out.println("Exit value " + exitValue);
+			return true;
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
 	}
 }
